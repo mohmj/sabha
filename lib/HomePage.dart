@@ -215,7 +215,7 @@ class _HomePageState extends State<HomePage> {
                                   style: TextStyle(color: Colors.white, fontSize: 20),
                                 ),
                                 onPressed: (){
-                                  numberOfThikr=0;
+                                  numberOfThikr=numberOfAllThikr=0;
                                   Navigator.pop(context);
                                 },
                                 width: 120,
