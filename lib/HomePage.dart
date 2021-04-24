@@ -120,7 +120,7 @@ class _HomePageState extends State<HomePage> {
                   onPressed: (){
                     setState(() {
 //                    numberOfAllThikr+=(totalThisThikr-numberOfThikrNow);
-                        numberOfAllThikr=numberOfAllThikr-numberOfThikrNow+totalThisThikr;
+                      numberOfAllThikr=numberOfAllThikr-numberOfThikrNow+totalThisThikr;
                       numberOfThikrNow=0;
                       if(numberOfThikr<athkar.getThikrLenght()-1){
                         athkar.nextThekr();
@@ -200,6 +200,7 @@ class _HomePageState extends State<HomePage> {
                           }
                           numberOfThikr=athkar.thikrNumber;
                           if (numberOfThikr == 0) {
+                            numberOfAllThikr=0;
                             endAlert.show();
                           }
                         }
@@ -207,7 +208,6 @@ class _HomePageState extends State<HomePage> {
                     },
                   ),
                 ),
-
               ],
             )
           )

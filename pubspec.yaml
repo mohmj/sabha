@@ -25,6 +25,10 @@ dependencies:
     sdk: flutter
   percent_indicator: ^2.1.8
   rflutter_alert: ^1.1.0
+  toggle_switch: "^0.1.9"
+  flutter_toggle_tab: ^1.0.0
+  font_awesome_flutter: ^8.10.1
+  http: ^0.12.2
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -34,6 +38,9 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  geolocator: ^6.1.13
+  http: ^0.12.2
+  flutter_spinkit: ^3.1.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

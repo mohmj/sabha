@@ -82,34 +82,45 @@ class Athkar{
     thikrNumber--;
   }
 
-  int totalThikrLoop(){
+  int getTotalThikrLoop(){
     var total=0;
-    for(int i=0; i<athkarMorning.length;i++){
-      total+=athkarMorning[i].loop;
+    if(morning==true){
+      for(int i=0; i<athkarMorning.length;i++){
+        total+=athkarMorning[i].loop;
+    }
+    }else {
+      for(int i=0; i<athkarEvening.length;i++){
+        total+=athkarEvening[i].loop;
+    }
     }
     return total;
   }
 
-  String getThikrMorning(int i){
-    return athkarMorning[i].thikr;
+  String getThikr(int i){
+    if(morning==true)return athkarMorning[i].thikr;
+    else return athkarEvening[i].thikr;
+
   }
-  String getThikrSourceMorning(int i){
-    return athkarMorning[i].source;
+  String getThikrSource(int i){
+    if(morning==true)return athkarMorning[i].source;
+    else return athkarEvening[i].source;
   }
-  int getThikrLoopMorning(int i){
-    return athkarMorning[i].loop;
+  int getThikrLoop(int i){
+    if(morning==true) return athkarMorning[i].loop;
+    else return athkarEvening[i].loop;
   }
 
-  int getThikrLenghtMorning(){
-    return athkarMorning.length;
+  int getThikrLenght(){
+    if(morning==true) return athkarMorning.length;
+    else return athkarEvening.length;
   }
 
-  String getThikrEvening(int i){
-    return athkarEvening[i].thikr;
-  }
-  String getThikrSourceEvening(int i){
-    return athkarEvening[i].source;
-  }
+//  String getThikrEvening(int i){
+//    return athkarEvening[i].thikr;
+//  }
+//  String getThikrSourceEvening(int i){
+//    return athkarEvening[i].source;
+//  }
 
   int nextThekr(){
       thikrNumber++;
@@ -119,9 +130,9 @@ class Athkar{
     thikrNumber=0;
   }
 
-  int getThikrLoopEvening(int i){
-    return athkarEvening[i].loop;
-  }
+//  int getThikrLoopEvening(int i){
+//    return athkarEvening[i].loop;
+//  }
 
 
 
