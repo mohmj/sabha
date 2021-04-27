@@ -4,51 +4,69 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class Prayer extends StatefulWidget {
+
   @override
   _PrayerState createState() => _PrayerState();
 }
 
+String LATITUDE = "", LONGTUDE = "";
+
 class _PrayerState extends State<Prayer> {
-  double LATITUDE, LONGTUDE;
+
+  bool visLocation=false;
+  
   @override
   void initState() {
-    // TODO: implement initState
-    super.initState();
     getLocation();
+    super.initState();
   }
 
-  void getLocation() async{
-    Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.low);
-    LATITUDE=position.latitude; LONGTUDE=position.longitude;
+  void getLocation() async {
+    setState(() {
+      LATITUDE=LONGTUDE="";
+    });
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+        setState(() {
+          LATITUDE = "${position.latitude}";
+          LONGTUDE = "${position.longitude}";
+          visLocation=true;
+        });
+    print("Latitude: " + LATITUDE + "\nLongtude: " + LONGTUDE);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey,
-      body: Center(
-        child: Column(
-          children: [
-                Text(LATITUDE.toString()+"\n"+LONGTUDE.toString(), style: TextStyle(fontSize: 32),),
-            SpinKitFadingGrid
-              (
-              itemBuilder: (_, int index) {
-                return DecoratedBox(
-                  decoration: BoxDecoration(
-                    color: index.isEven ? Colors.black : Colors.white,
-                  ),
-                );
-              },
-            ),
-            FlatButton(onPressed: (){
-              setState(() {
-                getLocation();
-              });
-            }, child: Text("pres me"))
-          ],
+      body: SafeArea(
+        child: Center(
+          child: Column(
+            children: [
+              Visibility(
+                visible: !visLocation,
+                child: SpinKitRing(
+                color: Colors.red[900],
+                  size: 50,
+              ),),
+              Text(LATITUDE),
+              Text(LONGTUDE),
+              Expanded(
+                child: Center(
+                  child: Text("صبحي موسى كاظم النملي", style: TextStyle(color: Colors.red, fontSize: 36),),
+                ),
+              ),
+              IconButton(
+                  onPressed: () {
+                    setState(() {
+                      getLocation();
+                    });
+                  },
+                  icon: Icon(Icons.notes))
+            ],
+          ),
         ),
       ),
     );
   }
 }
-

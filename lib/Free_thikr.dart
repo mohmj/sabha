@@ -32,158 +32,160 @@ class _Free_thikrState extends State<Free_thikr> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[300],
-      appBar: AppBar(
-        title: Text(
-          "FREE THKIR",
-          style: TextStyle(color: Colors.white),
-        ),
-      ),
-      body: Column(
-        children: [
-          SizedBox(
-            height: 10,
-          ),
-          Align(
-            alignment: Alignment.center,
-            child: Container(
-              child: FlutterToggleTab(
-                labels: ['المقيد', 'الحر'],
-                initialIndex: 1,
-                selectedBackgroundColors: [Colors.black],
-                unSelectedBackgroundColors: [Colors.white],
-                selectedTextStyle: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600),
-                unSelectedTextStyle: TextStyle(
-                    color: Colors.black,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600),
-                selectedLabelIndex: (index) {
-                  setState(() {
-                    if (index == 0) {
-                      thikr = 0;
-                      vis = false;
-                      Alert(
-                        context: context,
-                        type: AlertType.none,
-                        title: "أدخل هدفك",
-                        content: Column(
-                          children: [
-                            TextField(
-                              keyboardType: TextInputType.number,
-                              controller: totalThikrController,
-                            )
-                          ],
-                        ),
-                        buttons: [
-                          DialogButton(
-                            child: Text(
-                              "ابدأ",
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 20),
-                            ),
-                            onPressed: () {
-                              setState(() {
-                                totalThikr = int.parse(
-                                    totalThikrController.text.toString());
-                                Navigator.of(context).pop();
-                              });
-                            },
-                            width: 120,
-                          ),
-                        ],
-                      ).show();
-//
-                    } else {
-                      setState(() {
+      // appBar: AppBar(
+      //   title: Text(
+      //     "FREE THKIR",
+      //     style: TextStyle(color: Colors.white),
+      //   ),
+      // ),
+      body: SafeArea(
+        child: Column(
+          children: [
+            SizedBox(
+              height: 10,
+            ),
+            Align(
+              alignment: Alignment.center,
+              child: Container(
+                child: FlutterToggleTab(
+                  labels: ['المقيد', 'الحر'],
+                  initialIndex: 1,
+                  selectedBackgroundColors: [Colors.black],
+                  unSelectedBackgroundColors: [Colors.white],
+                  selectedTextStyle: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600),
+                  unSelectedTextStyle: TextStyle(
+                      color: Colors.black,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600),
+                  selectedLabelIndex: (index) {
+                    setState(() {
+                      if (index == 0) {
                         thikr = 0;
-                        vis = true;
-                      });
-                    }
+                        vis = false;
+                        Alert(
+                          context: context,
+                          type: AlertType.none,
+                          title: "أدخل هدفك",
+                          content: Column(
+                            children: [
+                              TextField(
+                                keyboardType: TextInputType.number,
+                                controller: totalThikrController,
+                              )
+                            ],
+                          ),
+                          buttons: [
+                            DialogButton(
+                              child: Text(
+                                "ابدأ",
+                                style:
+                                    TextStyle(color: Colors.white, fontSize: 20),
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  totalThikr = int.parse(
+                                      totalThikrController.text.toString());
+                                  Navigator.of(context).pop();
+                                });
+                              },
+                              width: 120,
+                            ),
+                          ],
+                        ).show();
+//
+                      } else {
+                        setState(() {
+                          thikr = 0;
+                          vis = true;
+                        });
+                      }
+                    });
+                  },
+                ),
+              ),
+            ),
+            Visibility(
+              visible: vis,
+              child: Expanded(
+                child: Column(
+                  children: [
+                    Expanded(
+                        child: Center(
+                      child: Text(
+                        thikr.toString(),
+                        style: TextStyle(color: Colors.black, fontSize: 48),
+                      ),
+                    )),
+                  ],
+                ),
+              ),
+            ),
+            Visibility(
+              visible: !vis,
+              child: Expanded(
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: Center(
+                        child: RichText(
+                          text: TextSpan(
+                            children: <TextSpan>[
+                              TextSpan(
+                                text: thikr.toString(),
+                                style:
+                                    TextStyle(color: Colors.black, fontSize: 48),
+                              ),
+                              TextSpan(
+                                text: " / " + totalThikr.toString(),
+                                style:
+                                    TextStyle(color: Colors.grey, fontSize: 38),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(15.0),
+                      child: LinearPercentIndicator(
+                        width: MediaQuery.of(context).size.width - 50,
+                        animation: false,
+                        lineHeight: 20.0,
+                        animationDuration: 1000,
+                        percent: progressFunction(thikr, totalThikr),
+                        // center: Text((thikr/totalThikr*100).toStringAsFixed(2) + "%", style: TextStyle(color: Colors.white),),
+                        linearStrokeCap: LinearStrokeCap.roundAll,
+                        progressColor: Colors.green[600],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Container(
+              height: 80,
+              width: double.infinity,
+//            color: Colors.red,
+              child: FloatingActionButton(
+                child: Icon(
+                  Icons.add,
+                  color: Colors.black,
+                ),
+                onPressed: () {
+                  setState(() {
+                    thikr++;
                   });
                 },
               ),
             ),
-          ),
-          Visibility(
-            visible: vis,
-            child: Expanded(
-              child: Column(
-                children: [
-                  Expanded(
-                      child: Center(
-                    child: Text(
-                      thikr.toString(),
-                      style: TextStyle(color: Colors.black, fontSize: 48),
-                    ),
-                  )),
-                ],
-              ),
+            SizedBox(
+              height: 10,
             ),
-          ),
-          Visibility(
-            visible: !vis,
-            child: Expanded(
-              child: Column(
-                children: [
-                  Expanded(
-                    child: Center(
-                      child: RichText(
-                        text: TextSpan(
-                          children: <TextSpan>[
-                            TextSpan(
-                              text: thikr.toString(),
-                              style:
-                                  TextStyle(color: Colors.black, fontSize: 48),
-                            ),
-                            TextSpan(
-                              text: " / " + totalThikr.toString(),
-                              style:
-                                  TextStyle(color: Colors.grey, fontSize: 38),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(15.0),
-                    child: LinearPercentIndicator(
-                      width: MediaQuery.of(context).size.width - 50,
-                      animation: false,
-                      lineHeight: 20.0,
-                      animationDuration: 1000,
-                      percent: progressFunction(thikr, totalThikr),
-                      center: Text((thikr/totalThikr*100).toStringAsFixed(2) + "%", style: TextStyle(color: Colors.white),),
-                      linearStrokeCap: LinearStrokeCap.roundAll,
-                      progressColor: Colors.black,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Container(
-            height: 80,
-            width: double.infinity,
-//            color: Colors.red,
-            child: FloatingActionButton(
-              child: Icon(
-                Icons.add,
-                color: Colors.black,
-              ),
-              onPressed: () {
-                setState(() {
-                  thikr++;
-                });
-              },
-            ),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
